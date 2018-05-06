@@ -24,12 +24,28 @@ RSpec.describe PostsController, type: :controller do
 #    end
 #  end
 
-#  describe "GET #new" do
-#    it "returns http success" do
-#      get :new
-#      expect(response).to have_http_status(:success)
-#    end
-#  end
+ describe "GET new" do
+   it "returns http success" do
+    get :new
+     expect(response).to have_http_status(:success)
+   end
+
+   it "renders the #new view" do
+     get :new
+     expect(response).to render_template :new
+   end
+
+   it "instantiates @post" do
+     get :new
+     expect(assigns(:post)).not_to be_nil
+   end
+ end
+
+ describe "POST create" do
+   it "increases the number of Post by 1" do
+     expect{ post :create, params: { post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(Post, :count).by(1)
+   end
+ end
 
 #  describe "GET #edit" do
 #    it "returns http success" do
