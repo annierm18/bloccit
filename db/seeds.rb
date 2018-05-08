@@ -27,3 +27,22 @@ puts "#{Post.count}"
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+
+
+50.times do
+  Advertisement.create!(
+    title: RandomData.random_sentence,
+    copy: RandomData.random_paragraph
+    price: RandomData.random_paragraph
+  )
+end
+advertisements = Advertisement.all
+
+
+puts "#{Advertisement.count}"
+post = Advertisement.find_or_create_by(title: "A unique title", copy: [text], price: [integer])
+puts "#{Advertisement.count}"
+
+
+puts "Seed finished"
+puts "#{Advertisement.count} advertisements created"
