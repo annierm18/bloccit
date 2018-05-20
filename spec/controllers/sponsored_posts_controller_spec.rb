@@ -4,22 +4,22 @@ RSpec.describe SponsoredPostsController, type: :controller do
 
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
 
-  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99) }
+  let(:my_sponsored_post) { my_topic.sponsored_posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99) }
 
-  describe "GET #show" do
-    it "returns http success" do
-       get :show, params: { id: sponsored_post.id }
+   describe "GET #show" do
+     it "returns http success" do
+       get :show, params: { topic_id: my_topic.id, id: my_sponsored_post.id }
        expect(response).to have_http_status(:success)
      end
-
      it "renders the #show view" do
-       get :show, params: { id: sponsored_post.id }
+       get :show, params: { topic_id: my_topic.id, id: my_sponsored_post.id }
        expect(response).to render_template :show
      end
 
-     it "assigns sponsored_post to @topic" do
-       get :show, params: { id: sponsored_post.id }
-       expect(assigns(:topic)).to eq(sponsored_post)
+     it "assigns my_sponsored_post to @sponsored_post" do
+       get :show, params: { topic_id: my_topic.id, id: my_sponsored_post.id }
+
+       expect(assigns(:sponsored_post)).to eq(my_sponsored_post)
      end
    end
 
@@ -61,6 +61,45 @@ RSpec.describe SponsoredPostsController, type: :controller do
        expect(sponsored_post_instance.title).to eq my_sponsored_post.title
        expect(sponsored_post_instance.body).to eq my_sponsored_post.body
        expect(sponsored_post_instance.price).to eq my_sponsored_post.price
+     end
+   end
+
+
+   describe "POST create" do
+     it "increases the number of Sponsored Posts by 1" do
+       expect{ post :create, params: { topic_id: my_topic.id, sponsored_post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } } }.to change(SponsoredPost,:count).by(1)
+     end
+
+     it "assigns the new sponsored post to @sponsored_post" do
+       post :create, params: { topic_id: my_topic.id, sponsored_post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+       expect(assigns(:sponsored_post)).to eq SponsoredPost.last
+     end
+
+     it "redirects to the new sponsored post" do
+       post :create, params: { topic_id: my_topic.id, sponsored_post: { title: RandomData.random_sentence, body: RandomData.random_paragraph } }
+       expect(response).to redirect_to [my_topic, SponsoredPost.last]
+     end
+   end
+
+   describe "PUT update" do
+     it "updates sponsored_post with expected attributes" do
+       new_title = RandomData.random_sentence
+       new_body = RandomData.random_paragraph
+
+       put :update, params: { topic_id: my_topic.id, id: my_sponsored_post.id, sponsored_post: {title: new_title, body: new_body } }
+
+       updated_sponsored_post = assigns(:sponsored_post)
+       expect(updated_sponsored_post.id).to eq my_sponsored_post.id
+       expect(updated_sponsored_post.title).to eq new_title
+       expect(updated_sponsored_post.body).to eq new_body
+     end
+
+     it "redirects to the updated sponsored_post" do
+       new_title = RandomData.random_sentence
+       new_body = RandomData.random_paragraph
+
+       put :update, params: { topic_id: my_topic.id, id: my_sponsored_post.id, sponsored_post: {title: new_title, body: new_body } }
+       expect(response).to redirect_to [my_topic, my_sponsored_post]
      end
    end
 
