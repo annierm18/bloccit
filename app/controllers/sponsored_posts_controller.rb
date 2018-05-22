@@ -19,7 +19,7 @@ class SponsoredPostsController < ApplicationController
       @sponsored_post.body = params[:sponsored_post][:body]
       @topic = Topic.find(params[:topic_id])
 
-      @post.topic = @topic
+      @sponsored_post.topic = @topic
 
       if @sponsored_post.save
         flash[:notice] = "SponsoredPost was saved."
