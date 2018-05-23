@@ -47,7 +47,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
      end
 
      it "renders the #edit view" do
-       get :edit, topic_id: my_topic.id, id: my_sponsored_post.id
+       get :edit, params: { topic_id: my_topic.id, id: my_sponsored_post.id }
 
        expect(response).to render_template :edit
      end
