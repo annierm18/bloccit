@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180522052433) do
-=======
-ActiveRecord::Schema.define(version: 20180522014011) do
->>>>>>> master
 
   create_table "advertisements", force: :cascade do |t|
     t.string "title"
