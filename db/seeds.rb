@@ -79,11 +79,19 @@ admin = User.create!(
 )
 
 moderator = User.create!(
+<<<<<<< HEAD
    name:     'Moderator User',
    email:    'moderator@example.com',
    password: 'helloworld',
    role:     'moderator'
  )
+=======
+  name:     'Moderator User',
+  email:    'moderator@example.com',
+  password: 'helloworld',
+  role:     'moderator'
+)
+>>>>>>> checkpoint-27-railsauthorization
 
 member = User.create!(
   name:     'Member User',

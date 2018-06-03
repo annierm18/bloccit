@@ -67,9 +67,14 @@ class PostsController < ApplicationController
     post = Post.find(params[:id])
 
     unless current_user == post.user || current_user.admin? || current_user.moderator?
+<<<<<<< HEAD
       flash[:alert] = "You must be an admin to do that."
+=======
+      flash[:alert] = "You must be an admin or a moderator to do that."
+>>>>>>> checkpoint-27-railsauthorization
       redirect_to [post.topic, post]
     end
   end
+
 
 end
