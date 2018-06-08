@@ -71,7 +71,7 @@ class PostsController < ApplicationController
       flash[:alert] = "You must be an admin to do that."
 
       flash[:alert] = "You must be an admin or a moderator to do that."
- checkpoint-27-railsauthorization
+
       redirect_to [post.topic, post]
     end
   end
