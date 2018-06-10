@@ -17,21 +17,18 @@ users = User.all
 end
 topics = Topic.all
 
-50.times do
-  Post.create!(
-    title: RandomData.random_sentence,
-    body: RandomData.random_paragraph
-  )
-end
 
 
 50.times do
-  Post.create!(
+  post = Post.create!(
     user: users.sample,
     topic: topics.sample,
     title: RandomData.random_sentence,
     body: RandomData.random_paragraph
   )
+
+  post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+  rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
 end
 
 posts = Post.all
@@ -79,19 +76,13 @@ admin = User.create!(
 )
 
 moderator = User.create!(
-<<<<<<< HEAD
    name:     'Moderator User',
    email:    'moderator@example.com',
    password: 'helloworld',
    role:     'moderator'
  )
-=======
-  name:     'Moderator User',
-  email:    'moderator@example.com',
-  password: 'helloworld',
-  role:     'moderator'
-)
->>>>>>> checkpoint-27-railsauthorization
+
+
 
 member = User.create!(
   name:     'Member User',
@@ -113,5 +104,6 @@ puts "#{SponsoredPost.count} sponsored_posts created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+puts "#{Vote.count} votes created"
 puts "#{Advertisement.count} advertisements created"
 puts "#{Question.count} questions created"
