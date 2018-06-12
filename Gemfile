@@ -51,3 +51,5 @@ group :development, :test do
  gem 'bootstrap-sass'
 
  gem 'bcrypt'
+
+ gem 'figaro', '1.0'

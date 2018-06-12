@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   before_save { self.email = email.downcase if email.present? }
   before_save :format_name
@@ -29,5 +30,9 @@ class User < ApplicationRecord
 
       self.name = arr.join(" ")
     end
+  end
+
+  def favorite_for(post)
+    favorites.where(post_id: post.id).first
   end
 end
