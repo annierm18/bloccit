@@ -64,17 +64,22 @@ class PostsController < ApplicationController
   end
 
   def authorize_user
-    post = Post.find(params[:id])
-
-    unless current_user == post.user || current_user.admin? || current_user.moderator?
-
-      flash[:alert] = "You must be an admin to do that."
-
-      flash[:alert] = "You must be an admin or a moderator to do that."
-
-      redirect_to [post.topic, post]
+    #admin
+    if current_user.admin?
+      return true
     end
+    #moderator
+    if params[:action] == "edit" || params[:action] == "update"
+      return true if current_user.moderator?
+    end
+
+    #post owner or member
+    post = Post.find(params[:id])
+    if current_user == post.user
+      return true
+    end
+
+    flash[:alert] = "You must be an admin or a moderator to do that."
+    redirect_to [post.topic, post]
   end
-
-
 end
