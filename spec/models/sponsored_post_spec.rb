@@ -4,7 +4,7 @@ RSpec.describe SponsoredPost, type: :model do
    let(:title) { RandomData.random_sentence }
    let(:body) { RandomData.random_paragraph }
  # #3
-   let(:topic) { Topic.create!(name: name, description: description) }
+   let(:topic) { create(:topic) }
  # #4
    let(:sponsored_post) { topic.sponsored_posts.create!(title: title, body: body, price: 99) }
 

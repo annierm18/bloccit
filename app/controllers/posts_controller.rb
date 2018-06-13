@@ -65,6 +65,7 @@ class PostsController < ApplicationController
 
   def authorize_user
     #admin
+<<<<<<< HEAD
     return true if current_user.admin?
 
     #moderator
@@ -81,6 +82,23 @@ class PostsController < ApplicationController
     flash[:alert] = "You must be an admin or a moderator to do that."
     redirect_to [post.topic, post]
   end
+=======
+    if current_user.admin?
+      return true
+    end
+    #moderator
+    if params[:action] == "edit" || params[:action] == "update"
+      return true if current_user.moderator?
+    end
+>>>>>>> checkpoint-31-railspublicprofiles
 
+    #post owner or member
+    post = Post.find(params[:id])
+    if current_user == post.user
+      return true
+    end
 
+    flash[:alert] = "You must be an admin or a moderator to do that."
+    redirect_to [post.topic, post]
+  end
 end
