@@ -9,6 +9,31 @@ RSpec.describe CommentsController, type: :controller do
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
   let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my_user) }
 
+  describe "not signed in" do
+ # #1
+     let(:factory_comment) { create(:comment) }
+
+     before do
+       post :create, params: { comment:  {body: RandomData.random_sentence}}
+     end
+
+ # #2
+     it "returns http success" do
+       get :show, params: { id: factory_comment.id }
+       expect(response).to have_http_status(:success)
+     end
+
+     it "renders the #show view" do
+       get :show, params: { id: factory_comment.id }
+       expect(response).to render_template :show
+     end
+
+     it "assigns factory_comment to @comment" do
+       get :show, params: { id: factory_comment.id }
+       expect(assigns(:comment)).to eq(factory_comment)
+     end
+   end
+
 
  context "guest" do
    describe "POST create" do
