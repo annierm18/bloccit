@@ -2,6 +2,10 @@ class VotesController < ApplicationController
 
   before_action :require_sign_in
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   def up_vote
     update_vote(1)
     redirect_back(fallback_location: :root)

@@ -14,7 +14,7 @@ RSpec.describe CommentsController, type: :controller do
      let(:factory_comment) { create(:comment) }
 
      before do
-       post :create, params: { comment:  {body: RandomData.random_sentence}}
+       post :create, params: {post_id: my_post.id, comment: {body: RandomData.random_sentence} }
      end
 
  # #2

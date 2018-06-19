@@ -10,15 +10,15 @@ RSpec.describe VotesController, type: :controller do
 
   describe "not signed in" do
  # #1
-     let(:factory_user) { create(:vote) }
+ let(:factory_vote) { create(:vote) }
 
-     before do
-       post :create, params: { vote: new_vote_attributes }
-     end
+ before do
+   post :create, params: { post_id: user_post.id}
+ end
 
  # #2
      it "returns http success" do
-       get :show, params: { id: factory_user.id }
+       get :show, params: { id: factory_vote.id }
        expect(response).to have_http_status(:success)
      end
 
@@ -27,7 +27,7 @@ RSpec.describe VotesController, type: :controller do
        expect(response).to render_template :show
      end
 
-     it "assigns factory_vote to @user" do
+     it "assigns factory_vote to @vote" do
        get :show, params: { id: factory_vote.id }
        expect(assigns(:vote)).to eq(factory_vote)
      end
