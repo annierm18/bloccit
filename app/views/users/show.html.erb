@@ -3,18 +3,20 @@
 
 <div class="row">
   <div class="col-md-8">
-    <p><%= @post.favorite %></p>
-      <% @post.favorites.each do |favorite| %>
+
+      <% @user.favorites.each do |favorite| %>
         <div class="media">
           <div class="media-body">
             <h4 class="media-heading">
-              <%= link_to image_tag(known_user.avatar_url), user_path(user.id))%>
+              <%= link_to image_tag(favorite.post.user.avatar_url(48)), users_path(favorite.post.user.id)%>
             </h4>
             <h4>
-               <%= render @comment.count %>
+               <%= favorite.post.title %>
+               <%= favorite.post.comments.count %>
+               <%= favorite.post.votes.count %>
             </h4>
             <h4>
-               <%= render @post.count %>
+
             </h4>
           </div>
         </div>
